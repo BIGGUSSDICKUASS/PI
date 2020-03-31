@@ -1,0 +1,65 @@
+<?php
+$link = mysqli_connect("localhost", "root", "", "Matej šarić");
+
+if(isset($_POST['TextBox']) && $_POST['TextBox'] != NULL){
+
+    $sql = $_POST["TextBox"];
+
+    if($result = mysqli_query($link, $sql))
+    {
+        if(mysqli_num_rows($result) > 0)
+        {
+            echo "<table>";
+            echo "<tr>";
+            echo "<th>ID</th>";
+            echo "<th>Ime_gosta</th>";
+            echo "<th>Cijena_sobe</th>";
+            echo "<th>Dorucak</th>";
+            echo "</tr>";
+
+            while($row = mysqli_fetch_array($result))
+            {
+                echo "<tr>";
+                echo "<td>" . $row['ID'] . "</td>";
+                echo "<td>" . $row['Ime_gosta'] . "</td>";
+                echo "<td>" . $row['Cijena_sobe'] . "</td>";
+                echo "<td>" . $row['Dorucak'] . "</td>";
+                echo "<tr>";}
+            echo "</table>";
+            mysqli_free_result($result);
+        }
+        else
+        {
+            echo "Nije pronađen nijedan zapis koji bi odgovarao vašem upitu.
+";
+        }
+    }
+    else
+    {
+        echo "ERROR: nemože se izvršiti $sql. " . mysqli_error($link);
+    }
+
+    mysqli_close($link);
+}
+?>
+
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+<body>
+
+<form class="" action="zad2.php" method="post">
+    <p>Name</p>
+    <input type="text" name="TextBox" value="" width="500">
+    <input type="submit" name="" value="submit">
+</form>
+
+</body>
+
+</html>
